@@ -24,7 +24,7 @@
                     <button class="btn btn-outline-primary" @onclick="Percentage">%</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Calculation.Divide ? "active" : "")" @onclick=" CalculationStateDivide">/</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Divide ? "active" : "")" @onclick=" CalculationStateDivide">/</button>
                 </td>
             </tr>
             <tr>
@@ -38,7 +38,7 @@
                     <button class="btn btn-outline-secondary" @onclick="NumPadNine">9</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Calculation.Multiply ? "active" : "")" @onclick="CalculationStateMultiply">x</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Multiply ? "active" : "")" @onclick="CalculationStateMultiply">x</button>
                 </td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@
                     <button class="btn btn-outline-secondary" @onclick="NumPadSix">6</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Calculation.Minus ? "active" : "")" @onclick="CalculationStateMinus">-</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Minus ? "active" : "")" @onclick="CalculationStateMinus">-</button>
                 </td>
             </tr>
             <tr>
@@ -66,7 +66,7 @@
                     <button class="btn btn-outline-secondary" @onclick="NumPadTree">3</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Calculation.Plus ? "active" : "")" @onclick="CalculationStatePlus">+</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Plus ? "active" : "")" @onclick="CalculationStatePlus">+</button>
                 </td>
             </tr>
             <tr>
@@ -77,7 +77,7 @@
                     <button class="btn btn-outline-secondary" @onclick="CommaOn">,</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Calculation.Som ? "active" : "")" @onclick="CalculationStateSwitch">=</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Som ? "active" : "")" @onclick="CalculationStateSwitch">=</button>
                 </td>
             </tr>
         </tbody>
@@ -88,7 +88,9 @@
     private bool isCalculationOn = false; 
     private List<int> displayNumbers = new List<int>(); 
     private char[] charDecimals = new char[7];
-    private decimal currentNumber = 0;
+    private decimal firstInputNumber = 0;
+    private decimal tempFirstInputNumber = 0;
+    private decimal numberInPerCentage = 0;
 
     private string displayNumber = "0";
     private string result = "";
@@ -96,10 +98,10 @@
     private string showPlusMinus = "";
     private string calculationNumbers = "";
 
-    private Calculation stateCalculation = Calculation.None;
-    private Calculation stateActiveButton = Calculation.None;
+    private Operation stateCalculation = Operation.None;
+    private Operation stateActiveButton = Operation.None;
 
-    private enum Calculation
+    private enum Operation
     {
         Divide,
         Multiply,
@@ -118,11 +120,13 @@
         calculationNumbers = "";
         isCommaOn = false; 
         isCalculationOn = false; 
-        currentNumber = 0;
+        firstInputNumber = 0;
+        tempFirstInputNumber = 0;
+        numberInPerCentage = 0;
         charDecimals = new char[7];
         displayNumbers = new List<int>();
-        stateCalculation = Calculation.None;
-        stateActiveButton = Calculation.None;
+        stateCalculation = Operation.None;
+        stateActiveButton = Operation.None;
     }
 
     /* Display digits including plus or minus sigh and decimals */
@@ -274,8 +278,8 @@
                 showPlusMinus += "-";
             }
 
-            currentNumber = decimal.Parse($"{showPlusMinus}{displayNumber}");
-            ConvertCalculationStringToNumbers(currentNumber);
+            tempFirstInputNumber = decimal.Parse($"{showPlusMinus}{displayNumber}");
+            ConvertCalculationStringToNumbers(tempFirstInputNumber);
             DisplayDigits();
         }
         else
@@ -297,28 +301,29 @@
     /* Calculate the percentage of the number. */
     private void Percentage()
     { 
-        decimal numberShort = decimal.Parse(displayNumber) / 100;
-        displayNumber = $"{numberShort}";
-         
-        ConvertCalculationStringToNumbers(numberShort);
+        numberInPerCentage = decimal.Parse(displayNumber) / 100;
+        displayNumber = $"{numberInPerCentage}";
+
+        ConvertCalculationStringToNumbers(numberInPerCentage);
 
         if (isCalculationOn)
         {
             calculationNumbers = displayNumber;
-        } 
+        }  
         else
         {
-            currentNumber = decimal.Parse(result); 
+            tempFirstInputNumber = numberInPerCentage;
+
         }
     }
 
     /* Toggle the calculation buttons of multiply, divide, minus and plus. */
-    private void ToggleCalculationActiveState(Calculation changeState)
+    private void ToggleCalculationActiveState(Operation changeState)
     {
         stateCalculation = changeState;
-        if (stateActiveButton != Calculation.None)
+        if (stateActiveButton != Operation.None)
         {
-            stateActiveButton = Calculation.None;
+            stateActiveButton = Operation.None;
         }
         else
         {
@@ -331,7 +336,7 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Calculation.Divide);
+        ToggleCalculationActiveState(Operation.Divide);
     }
 
     /* This will hold isCalculation is true when multiply is clicked. Reset the state isCommaOn to false. */
@@ -339,7 +344,7 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Calculation.Multiply);
+        ToggleCalculationActiveState(Operation.Multiply);
     }
 
     /* This will hold isCalculation is true when minus is clicked. Reset the state isCommaOn to false. */
@@ -347,7 +352,7 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Calculation.Minus);
+        ToggleCalculationActiveState(Operation.Minus);
     }
 
     /* This will hold isCalculation is true when plus is clicked. Reset the state isCommaOn to false. */
@@ -355,45 +360,50 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Calculation.Plus);
+        ToggleCalculationActiveState(Operation.Plus);
     }
 
     /* Input data is in string and need to convert to decimal for calculation.
     * The calculation are Divide, Multiply, Minus and Plus */
     private void CalculationStateSwitch()
-    {
-        isCalculationOn = false;
+    {  
+        // assign firstInputNumber from result by first time otherwise it has been filled by tempFirstInputNumber
+        firstInputNumber = tempFirstInputNumber == 0 ? firstInputNumber = decimal.Parse(result) : firstInputNumber = tempFirstInputNumber;
+
         decimal resultCalculation = 0;
-        decimal parssedCalculationNumbers = 0; 
-        decimal.TryParse(calculationNumbers, out parssedCalculationNumbers);
+        decimal secondInputNumber = 0; 
+        decimal.TryParse(calculationNumbers, out secondInputNumber);
 
         switch (stateCalculation)
         {
-            case Calculation.Divide: 
-                resultCalculation = currentNumber / parssedCalculationNumbers;
+            case Operation.Divide: 
+                resultCalculation = firstInputNumber / secondInputNumber;
                 break;
-            case Calculation.Multiply:  
-                resultCalculation = currentNumber * parssedCalculationNumbers;
+            case Operation.Multiply:  
+                resultCalculation = firstInputNumber * secondInputNumber;
                 break;
-            case Calculation.Minus:
-                resultCalculation = currentNumber - parssedCalculationNumbers;
+            case Operation.Minus:
+                resultCalculation = firstInputNumber - secondInputNumber;
                 break;
-            case Calculation.Plus:
-                resultCalculation = currentNumber + parssedCalculationNumbers;
+            case Operation.Plus:
+                resultCalculation = firstInputNumber + secondInputNumber;
                 break;
 
         }
 
         ConvertCalculationStringToNumbers(resultCalculation);
         DisplayDigits();
-        ToggleCalculationActiveState(Calculation.Som); 
+        ToggleCalculationActiveState(Operation.Som); 
+        isCalculationOn = false;
+        tempFirstInputNumber = 0;
+
     }
 
     /* Number from the numpad (0-9) will be displayd on screen with currentNumber and stored in FillCurrentNumbers. */
     private void FillNumber(int number, string numberDisplay)
     { 
         FillDisplayNumbers(number, numberDisplay);
-        currentNumber = decimal.Parse(result);
+        
     }
 
     private void NumPadZero()
