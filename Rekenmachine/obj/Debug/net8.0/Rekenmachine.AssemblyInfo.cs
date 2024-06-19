@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rekenmachine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee4eb25158449963607c28756ca7298975aca822")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5762172389aa874f7f762bde7c31a58e6176cac")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rekenmachine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rekenmachine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
