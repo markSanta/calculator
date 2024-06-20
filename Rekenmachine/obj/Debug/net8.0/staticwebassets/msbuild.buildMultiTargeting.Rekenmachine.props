@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Rekenmachine.props" />
-</Project>
