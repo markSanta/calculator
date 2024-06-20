@@ -85,18 +85,23 @@
 </div>
 @code {
     private bool isCommaOn = false;
-    private bool isCalculationOn = false; 
-    private List<int> displayNumbers = new List<int>(); 
-    private char[] charDecimals = new char[7];
+    private bool isCalculationOn = false;
+    private bool isPlusMinusOnFirst = false;
+    private bool isPlusMinusOnSecond = false;
+    private List<int> displayFirstInputNumbers = new List<int>(); 
+    private List<int> displaySecondnputNumbers = new List<int>();
+
     private decimal firstInputNumber = 0;
-    private decimal tempFirstInputNumber = 0;
-    private decimal numberInPerCentage = 0;
+    private decimal secondInputNumber = 0;  
 
     private string displayNumber = "0";
+    private string concatFirstInputNumber = "";
+    private string concatSecondInputNumber = "";
     private string result = "";
-    private string decimals = "";
-    private string showPlusMinus = "";
-    private string calculationNumbers = "";
+    private string decimalsFirstInput = "";
+    private string decimalsSecondInput = "";
+    private string plusMinusFirstInput = "";
+    private string plusMinusSecondInput = "";
 
     private Operation stateCalculation = Operation.None;
     private Operation stateActiveButton = Operation.None;
@@ -114,58 +119,98 @@
     private void ResetAll()
     {
         displayNumber = "0";
+        concatFirstInputNumber = "";
+        concatSecondInputNumber = "";
         result = "";
-        decimals = "";
-        showPlusMinus = "";
-        calculationNumbers = "";
+        decimalsFirstInput = "";
+        decimalsSecondInput = "";
+        plusMinusFirstInput = "";
+        plusMinusSecondInput = "";
         isCommaOn = false; 
-        isCalculationOn = false; 
+        isCalculationOn = false;
+        isPlusMinusOnFirst = false;
+        isPlusMinusOnSecond = false;
         firstInputNumber = 0;
-        tempFirstInputNumber = 0;
-        numberInPerCentage = 0;
-        charDecimals = new char[7];
-        displayNumbers = new List<int>();
+        secondInputNumber = 0;  
+
+        displayFirstInputNumbers = new List<int>();
+        displaySecondnputNumbers = new List<int>();
         stateCalculation = Operation.None;
         stateActiveButton = Operation.None;
     }
 
-    /* Display digits including plus or minus sigh and decimals */
-    private void DisplayDigits()
+    /* Placeholders of numbers with plus and minus 9 digits and decimals */
+    private void PlaceholderNumber(out string firstInputResult, out string secondInputResult)
     {
-        result = "";
+        firstInputResult = "";
+        secondInputResult = "";
 
-        switch (displayNumbers.Count - 1)
+        if (!isCalculationOn)
         {
-            case 0:
-                result += $"{showPlusMinus}{displayNumbers[0]}{decimals}";
-                break;
-            case 1:
-                result += $"{showPlusMinus}{displayNumbers[0]}{displayNumbers[1]}{decimals}";
-                break;
-            case 2:
-                result += $"{showPlusMinus}{displayNumbers[0]}{displayNumbers[1]}{displayNumbers[2]}{decimals}";
-                break;
-            case 3:
-                result += $"{showPlusMinus}{displayNumbers[0]}.{displayNumbers[1]}{displayNumbers[2]}{displayNumbers[3]}{decimals}";
-                break;
-            case 4:
-                result += $"{showPlusMinus}{displayNumbers[0]}{displayNumbers[1]}.{displayNumbers[2]}{displayNumbers[3]}{displayNumbers[4]}{decimals}";
-                break;
-            case 5:
-                result += $"{showPlusMinus}{displayNumbers[0]}{displayNumbers[1]}{displayNumbers[2]}.{displayNumbers[3]}{displayNumbers[4]}{displayNumbers[5]}{decimals}";
-                break;
-            case 6:
-                result += $"{showPlusMinus}{displayNumbers[0]}.{displayNumbers[1]}{displayNumbers[2]}{displayNumbers[3]}.{displayNumbers[4]}{displayNumbers[5]}{displayNumbers[6]}{decimals}";
-                break;
-            case 7:
-                result += $"{showPlusMinus}{displayNumbers[0]}{displayNumbers[1]}.{displayNumbers[2]}{displayNumbers[3]}{displayNumbers[4]}.{displayNumbers[5]}{displayNumbers[6]}{displayNumbers[7]}{decimals}";
-                break;
-            default:
-                result += $"{showPlusMinus}{displayNumbers[0]}{displayNumbers[1]}{displayNumbers[2]}.{displayNumbers[3]}{displayNumbers[4]}{displayNumbers[5]}.{displayNumbers[6]}{displayNumbers[7]}{displayNumbers[8]}{decimals}";
-                break;
+            switch (displayFirstInputNumbers.Count - 1)
+            {
+                case 0:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{decimalsFirstInput}";
+                    break;
+                case 1:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{decimalsFirstInput}";
+                    break;
+                case 2:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{decimalsFirstInput}";
+                    break;
+                case 3:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}.{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{decimalsFirstInput}";
+                    break;
+                case 4:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}.{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{decimalsFirstInput}";
+                    break;
+                case 5:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}.{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}{decimalsFirstInput}";
+                    break;
+                case 6:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}.{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}.{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}{displayFirstInputNumbers[6]}{decimalsFirstInput}";
+                    break;
+                case 7:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}.{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}.{displayFirstInputNumbers[5]}{displayFirstInputNumbers[6]}{displayFirstInputNumbers[7]}{decimalsFirstInput}";
+                    break;
+                default:
+                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}.{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}.{displayFirstInputNumbers[6]}{displayFirstInputNumbers[7]}{displayFirstInputNumbers[8]}{decimalsFirstInput}";
+                    break;
+            }
         }
-
-        displayNumber = result; 
+        else
+        {
+            switch (displaySecondnputNumbers.Count - 1)
+            {
+                case 0:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{decimalsSecondInput}";
+                    break;
+                case 1:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{decimalsSecondInput}";
+                    break;
+                case 2:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{decimalsSecondInput}";
+                    break;
+                case 3:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}.{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{decimalsSecondInput}";
+                    break;
+                case 4:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}.{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{decimalsSecondInput}";
+                    break;
+                case 5:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}.{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}{decimalsSecondInput}";
+                    break;
+                case 6:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}.{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}.{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}{displaySecondnputNumbers[6]}{decimalsSecondInput}";
+                    break;
+                case 7:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}.{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}.{displaySecondnputNumbers[5]}{displaySecondnputNumbers[6]}{displaySecondnputNumbers[7]}{decimalsSecondInput}";
+                    break;
+                default:
+                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}.{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}.{displaySecondnputNumbers[6]}{displaySecondnputNumbers[7]}{displaySecondnputNumbers[8]}{decimalsSecondInput}";
+                    break;
+            }
+        }
     }
 
     /* Flag for comma when it's pressed */
@@ -174,150 +219,169 @@
         isCommaOn = true;
     }
 
-    /* The decimals need to be converted to array of characters and then each character count if it's an digit */
-    private int CountDigitInDecimals()
+    /* Count the decimals in the first input number and second input number */
+    private void CountDecimalsFirstAndSecondInpuntNumber(out int countFirst, out int countSecond)
     {
-        int countDigit = 0;
-        charDecimals = decimals.ToCharArray();
+        countFirst = 0;
+        countSecond = 0;
 
-        foreach (char item in charDecimals)
+        foreach (char item in decimalsFirstInput.ToCharArray())
         {
             if (char.IsDigit(item))
-                countDigit++;
+                countFirst++;
         }
 
-        return countDigit;
+        foreach (char item in decimalsSecondInput.ToCharArray())
+        {
+            if (char.IsDigit(item))
+                countSecond++;
+        } 
     }
 
-    /* Will strip the numbers of the characters '-' and ',' */
-    private void FillDisplayNumbers(int fillDigit, string fillDecimals)
+    /* Will combine the first and second input numbers into string */
+    private void ConcatenateNumbers(int fillDigit, string fillDigitInString)
     {
-        int totalDigit = displayNumbers.Count + CountDigitInDecimals();
+        int countFirst = 0;
+        int countSecond = 0;
+        CountDecimalsFirstAndSecondInpuntNumber(out countFirst, out countSecond);
 
-        if (isCalculationOn && isCommaOn)
+        int totalDigitPlaceholderFirst = displayFirstInputNumbers.Count + countFirst;
+        int totalDigitPlaceholderSecond = displayFirstInputNumbers.Count + countSecond;
+
+        if (!isCalculationOn && isCommaOn && totalDigitPlaceholderFirst < 9)
         {
-            string resultComma = calculationNumbers.Contains(',') ? "" : ",";
-            calculationNumbers += $"{resultComma}{fillDigit}";
-            displayNumber = calculationNumbers;
-        }
-        else if (isCalculationOn)
-        {
-            calculationNumbers += fillDigit;
-            displayNumber = calculationNumbers;
-        }
-        else if (isCommaOn && totalDigit < 9)
+            // set comma when comma is clicked multiple times
+            string firstInputWithComma = concatFirstInputNumber.Contains(',') ? "" : ",";
+
+            // concatenate first input number with decimals
+            decimalsFirstInput += firstInputWithComma + fillDigitInString;
+            concatFirstInputNumber = $"{decimalsFirstInput}";
+
+            // update placeholder of first input number
+            PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+
+            // updating display number
+            displayNumber = concatFirstInputNumber;
+        } 
+        else if (isCalculationOn && isCommaOn && totalDigitPlaceholderSecond < 9)
         {  
-            result = displayNumber.Contains(',') ? "" : ",";
-            decimals += result + fillDecimals;
+            // set comma when comma is clicked multiple times
+            string secondInputWithComma = concatSecondInputNumber.Contains(',') ? "" : ",";
 
-            DisplayDigits();
-        }
-        else
-        {
-            if (totalDigit < 9 && displayNumbers.Count < 9)
-                displayNumbers.Add(fillDigit);
+            // concatenate second input number with decimals
+            decimalsSecondInput += secondInputWithComma + fillDigitInString;
+            concatSecondInputNumber = $"{decimalsSecondInput}";
 
-            DisplayDigits();
+            PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+
+            // concatnate second input number with decimals
+            displayNumber = concatSecondInputNumber;
         }  
-    }
-
-    /* Convert the resulat calculation from double to string so all each character
-     * can be parsed to an interger and stored in numbers for displaying the digits.
-     * When a string contains a comma, all the numbers before the comma will be stripped apart
-     * parsed to an integer and stored in numbers. The numbers after the comma wille be stored
-     * in decimals. */
-    private void ConvertCalculationStringToNumbers(decimal resultCalculation)
-    {
-        decimals = "";
-        showPlusMinus = "";
-        displayNumbers = new List<int>();  // reset old values
-
-        string tempResult = resultCalculation.ToString();
-
-        if (tempResult.StartsWith('-'))
-        {
-            showPlusMinus = "-";
-            tempResult = tempResult.Substring(1);
-        }
-
-        if (tempResult.Contains(','))
-        {
-            int indexComma = tempResult.IndexOf(',');
-            decimals = tempResult.Substring(indexComma);  // numbers after comma are stored in decimals
-            tempResult = tempResult.Substring(0, indexComma);
-        }
-
-        char[] tempCharArr = tempResult.ToCharArray();
-
-        // add to all numbers before comma
-        foreach (char item in tempCharArr)
-        {
-            if (char.IsDigit(item))
+        else
+        { 
+            // check for first input number if the digits has enough space to store in placeholder
+            if (!isCalculationOn && totalDigitPlaceholderFirst < 9 && displayFirstInputNumbers.Count < 9)
             {
-                int number = int.Parse(item.ToString());
-                displayNumbers.Add(number);
+                // place the digit of fist input numbers to the placeholder
+                displayFirstInputNumbers.Add(fillDigit); 
+
+                // update first input number
+                PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+
+                displayNumber = concatFirstInputNumber;
+            }
+
+            // check for second input number if the digits has enough space to store in placeholder
+            if (isCalculationOn && totalDigitPlaceholderSecond < 9 && displaySecondnputNumbers.Count < 9)
+            { 
+                // place the digit of second input numbers to the placeholder
+                displaySecondnputNumbers.Add(fillDigit);  
+
+                // update second input number
+                PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+
+                displayNumber = concatSecondInputNumber;
             } 
-        }
+        }   
+
+        SetInputNumber(concatFirstInputNumber, concatSecondInputNumber);
     }
 
-    /* The minus sign will be toggled on and off based on calculation is on. */
+
+    /* The minus sign will be toggled on and off based on for first input number and second input number */
     private void TogglePlusAndMinus()
-    {
-        showPlusMinus = "";
-        string showPlusMinusCalcNumber = ""; 
+    { 
+        plusMinusFirstInput = "";
+        plusMinusSecondInput = "";
+
+        string firstInput = "";
+        string secondInput = "";
 
         if (!isCalculationOn)
         {
-            if (displayNumber.Contains('-'))
-            {
-                int indexPlusMinus = displayNumber.IndexOf('-');
-                displayNumber = displayNumber.Remove(indexPlusMinus, 1);
-            }
-            else
-            {
-                showPlusMinus += "-";
-            }
+            // toggle
+            isPlusMinusOnFirst = !isPlusMinusOnFirst;
+            plusMinusFirstInput = isPlusMinusOnFirst ? plusMinusFirstInput += "-" : plusMinusFirstInput += "";
+            // overwrite display value
+            displayNumber = isPlusMinusOnFirst ? displayNumber = $"{plusMinusFirstInput}{concatFirstInputNumber}" : displayNumber = $"{concatFirstInputNumber}";
 
-            tempFirstInputNumber = decimal.Parse($"{showPlusMinus}{displayNumber}");
-            ConvertCalculationStringToNumbers(tempFirstInputNumber);
-            DisplayDigits();
+            firstInput = displayNumber;
         }
         else
         {
-            if (calculationNumbers.Contains('-'))
-            {
-                int indexPlusMinus = calculationNumbers.IndexOf('-');
-                calculationNumbers = calculationNumbers.Remove(indexPlusMinus, 1);
-            }
-            else
-            {
-                showPlusMinusCalcNumber += "-";
-            }
-            calculationNumbers = $"{showPlusMinusCalcNumber}{calculationNumbers}";
-            displayNumber = calculationNumbers;
-        }  
+            // toggle
+            isPlusMinusOnSecond = !isPlusMinusOnSecond;
+            plusMinusSecondInput = isPlusMinusOnSecond ? plusMinusSecondInput += "-" : plusMinusSecondInput += "";
+            // overwrite display value
+            displayNumber = isPlusMinusOnSecond ? displayNumber = $"{plusMinusSecondInput}{concatSecondInputNumber}" : displayNumber = $"{concatSecondInputNumber}";
+
+            secondInput = displayNumber;
+        }
+
+        SetInputNumber(firstInput, secondInput); 
     } 
 
     /* Calculate the percentage of the number. */
     private void Percentage()
     { 
-        numberInPerCentage = decimal.Parse(displayNumber) / 100;
+        decimal parseFirstInputNumber = 0;
+        decimal parseSecondInputNumber = 0;
 
-        // Forcing to use comma with decimal
+        decimal.TryParse(concatFirstInputNumber, out parseFirstInputNumber);
+        decimal.TryParse(concatSecondInputNumber, out parseSecondInputNumber);
+
+        decimal firstNumberInPercentage = parseFirstInputNumber / 100;
+        decimal secondNumberInPercentage = parseSecondInputNumber / 100;
+
+        //Forcing to use comma with decimal
         CultureInfo culture = new CultureInfo("nl-NL");
-        displayNumber = numberInPerCentage.ToString(culture);
 
-        ConvertCalculationStringToNumbers(numberInPerCentage);
+        string resultFirstNumber = firstNumberInPercentage.ToString(culture);
+        string resultSecondNumber = secondNumberInPercentage.ToString(culture);
 
-        if (isCalculationOn)
-        {
-            calculationNumbers = displayNumber;
-        }  
-        else
-        {
-            tempFirstInputNumber = numberInPerCentage;
+        // overwrite concatenate first and second input values
+        concatFirstInputNumber = resultFirstNumber;
+        concatSecondInputNumber = resultSecondNumber;
 
-        }
+        //update the digits of the placeholder
+        PlaceholderNumber(out resultFirstNumber, out resultSecondNumber);
+
+        displayNumber = !isCalculationOn ? concatFirstInputNumber : concatSecondInputNumber;
+
+        SetInputNumber(concatFirstInputNumber, concatSecondInputNumber);
+    }
+
+    /* Overwrite the value of firstInpuntNumber and secondInputNumber based on given number. 
+     * The first and second input number will further needed for calculation.
+    */
+    private void SetInputNumber(string firstNumber, string secondNumber)
+    {
+        if (!string.IsNullOrEmpty(firstNumber)) 
+            firstInputNumber = decimal.Parse(firstNumber);
+ 
+
+        if (!string.IsNullOrEmpty(secondNumber)) 
+            secondInputNumber = decimal.Parse(secondNumber);
     }
 
     /* Toggle the calculation buttons of multiply, divide, minus and plus. */
@@ -369,14 +433,9 @@
     /* Input data is in string and need to convert to decimal for calculation.
     * The calculation are Divide, Multiply, Minus and Plus */
     private void CalculationStateSwitch()
-    {  
-        // assign firstInputNumber from result by first time otherwise it has been filled by tempFirstInputNumber
-        firstInputNumber = tempFirstInputNumber == 0 ? firstInputNumber = decimal.Parse(result) : firstInputNumber = tempFirstInputNumber;
-
+    {    
         decimal resultCalculation = 0;
-        decimal secondInputNumber = 0; 
-        decimal.TryParse(calculationNumbers, out secondInputNumber);
-
+  
         switch (stateCalculation)
         {
             case Operation.Divide: 
@@ -393,70 +452,59 @@
                 break;
 
         }
-
-        ConvertCalculationStringToNumbers(resultCalculation);
-        DisplayDigits();
+        displayNumber = resultCalculation.ToString();  
         ToggleCalculationActiveState(Operation.Som); 
-        isCalculationOn = false;
-        tempFirstInputNumber = 0;
-
-    }
-
-    /* Number from the numpad (0-9) will be displayd on screen with currentNumber and stored in FillCurrentNumbers. */
-    private void FillNumber(int number, string numberDisplay)
-    { 
-        FillDisplayNumbers(number, numberDisplay);
-        
+        isCalculationOn = false;  
     }
 
     private void NumPadZero()
-    {
-        FillNumber(0, "0");
+    { 
+        ConcatenateNumbers(0, "0");
     }
 
     private void NumPadOne()
-    {
-        FillNumber(1, "1");
+    { 
+        ConcatenateNumbers(1, "1");
     }
 
     private void NumPadTwo()
-    {
-        FillNumber(2, "2");
+    { 
+        ConcatenateNumbers(2, "2");
     }
 
     private void NumPadTree()
-    {
-        FillNumber(3, "3");
+    { 
+        ConcatenateNumbers(3, "3");
     }
 
     private void NumPadFour()
-    {
-        FillNumber(4, "4");
+    { 
+        ConcatenateNumbers(4, "4");
     }
 
     private void NumPadFive()
-    {
-        FillNumber(5, "5");
+    { 
+        ConcatenateNumbers(5, "5");
     }
 
     private void NumPadSix()
-    {
-        FillNumber(6, "6");
+    { 
+        ConcatenateNumbers(6, "6");
     }
 
     private void NumPadSeven()
-    {
-        FillNumber(7, "7");
+    { 
+        ConcatenateNumbers(7, "7");
     }
 
     private void NumPadEight()
-    {
-        FillNumber(8, "8");
+    { 
+        ConcatenateNumbers(8, "8");
     }
 
     private void NumPadNine()
-    {
-        FillNumber(9, "9");
+    { 
+        ConcatenateNumbers(9, "9");
     }
 
 
