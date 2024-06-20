@@ -302,7 +302,10 @@
     private void Percentage()
     { 
         numberInPerCentage = decimal.Parse(displayNumber) / 100;
-        displayNumber = $"{numberInPerCentage}";
+
+        // Forcing to use comma with decimal
+        CultureInfo culture = new CultureInfo("nl-NL");
+        displayNumber = numberInPerCentage.ToString(culture);
 
         ConvertCalculationStringToNumbers(numberInPerCentage);
 
