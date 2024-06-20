@@ -1,0 +1,19 @@
+# .NET Core
+bin/
+obj/
+*.user
+*.rsuser
+.vscode/
+
+# Visual Studio
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Other files
+*.log
+*.lock.json
+.DS_Store
