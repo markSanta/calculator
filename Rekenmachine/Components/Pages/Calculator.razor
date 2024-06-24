@@ -138,76 +138,93 @@
     }
 
     /* Placeholders of numbers with plus and minus 9 digits and decimals */
-    private void PlaceholderNumber(out string firstInputResult, out string secondInputResult)
-    {
-        firstInputResult = "";
-        secondInputResult = "";
+    private void PlaceholderNumber(string firstInput, out string resultFirstInput, string secondInput, out string resultSecondInput)
+    {  
+        resultFirstInput = "";
+        resultSecondInput = "";
 
         if (!isCalculationOn)
         {
-            switch (displayFirstInputNumbers.Count - 1)
+            // Comma is first pressed after the operation (division, multiply, minus and adding)
+            if (displayFirstInputNumbers.Count == 0)
             {
-                case 0:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{decimalsFirstInput}";
-                    break;
-                case 1:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{decimalsFirstInput}";
-                    break;
-                case 2:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{decimalsFirstInput}";
-                    break;
-                case 3:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}.{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{decimalsFirstInput}";
-                    break;
-                case 4:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}.{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{decimalsFirstInput}";
-                    break;
-                case 5:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}.{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}{decimalsFirstInput}";
-                    break;
-                case 6:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}.{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}.{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}{displayFirstInputNumbers[6]}{decimalsFirstInput}";
-                    break;
-                case 7:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}.{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}.{displayFirstInputNumbers[5]}{displayFirstInputNumbers[6]}{displayFirstInputNumbers[7]}{decimalsFirstInput}";
-                    break;
-                default:
-                    firstInputResult = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}.{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}.{displayFirstInputNumbers[6]}{displayFirstInputNumbers[7]}{displayFirstInputNumbers[8]}{decimalsFirstInput}";
-                    break;
+                resultFirstInput = $"{plusMinusFirstInput}{firstInput}";
+            }
+            else // Numpad is first pressed before the operation (division, multiply, minus and adding)
+            { 
+                switch (displayFirstInputNumbers.Count - 1)
+                {
+                    case 0:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{decimalsFirstInput}";
+                        break;
+                    case 1:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{decimalsFirstInput}";
+                        break;
+                    case 2:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{decimalsFirstInput}";
+                        break;
+                    case 3:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}.{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{decimalsFirstInput}";
+                        break;
+                    case 4:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}.{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{decimalsFirstInput}";
+                        break;
+                    case 5:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}.{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}{decimalsFirstInput}";
+                        break;
+                    case 6:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}.{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}.{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}{displayFirstInputNumbers[6]}{decimalsFirstInput}";
+                        break;
+                    case 7:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}.{displayFirstInputNumbers[2]}{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}.{displayFirstInputNumbers[5]}{displayFirstInputNumbers[6]}{displayFirstInputNumbers[7]}{decimalsFirstInput}";
+                        break;
+                    default:
+                        resultFirstInput = $"{plusMinusFirstInput}{displayFirstInputNumbers[0]}{displayFirstInputNumbers[1]}{displayFirstInputNumbers[2]}.{displayFirstInputNumbers[3]}{displayFirstInputNumbers[4]}{displayFirstInputNumbers[5]}.{displayFirstInputNumbers[6]}{displayFirstInputNumbers[7]}{displayFirstInputNumbers[8]}{decimalsFirstInput}";
+                        break;
+                }
             }
         }
         else
         {
-            switch (displaySecondnputNumbers.Count - 1)
+            // Comma is first pressed after the operation (division, multiply, minus and adding)
+            if (displaySecondnputNumbers.Count == 0)
             {
-                case 0:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{decimalsSecondInput}";
-                    break;
-                case 1:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{decimalsSecondInput}";
-                    break;
-                case 2:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{decimalsSecondInput}";
-                    break;
-                case 3:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}.{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{decimalsSecondInput}";
-                    break;
-                case 4:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}.{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{decimalsSecondInput}";
-                    break;
-                case 5:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}.{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}{decimalsSecondInput}";
-                    break;
-                case 6:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}.{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}.{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}{displaySecondnputNumbers[6]}{decimalsSecondInput}";
-                    break;
-                case 7:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}.{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}.{displaySecondnputNumbers[5]}{displaySecondnputNumbers[6]}{displaySecondnputNumbers[7]}{decimalsSecondInput}";
-                    break;
-                default:
-                    secondInputResult = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}.{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}.{displaySecondnputNumbers[6]}{displaySecondnputNumbers[7]}{displaySecondnputNumbers[8]}{decimalsSecondInput}";
-                    break;
+                resultSecondInput = $"{plusMinusSecondInput}{secondInput}";
             }
+            else // Numpad is first pressed before the operation (division, multiply, minus and adding)
+            {
+
+                switch (displaySecondnputNumbers.Count - 1)
+                {
+                    case 0:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{decimalsSecondInput}";
+                        break;
+                    case 1:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{decimalsSecondInput}";
+                        break;
+                    case 2:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{decimalsSecondInput}";
+                        break;
+                    case 3:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}.{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{decimalsSecondInput}";
+                        break;
+                    case 4:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}.{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{decimalsSecondInput}";
+                        break;
+                    case 5:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}.{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}{decimalsSecondInput}";
+                        break;
+                    case 6:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}.{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}.{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}{displaySecondnputNumbers[6]}{decimalsSecondInput}";
+                        break;
+                    case 7:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}.{displaySecondnputNumbers[2]}{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}.{displaySecondnputNumbers[5]}{displaySecondnputNumbers[6]}{displaySecondnputNumbers[7]}{decimalsSecondInput}";
+                        break;
+                    default:
+                        resultSecondInput = $"{plusMinusSecondInput}{displaySecondnputNumbers[0]}{displaySecondnputNumbers[1]}{displaySecondnputNumbers[2]}.{displaySecondnputNumbers[3]}{displaySecondnputNumbers[4]}{displaySecondnputNumbers[5]}.{displaySecondnputNumbers[6]}{displaySecondnputNumbers[7]}{displaySecondnputNumbers[8]}{decimalsSecondInput}";
+                        break;
+                }
+            } 
         }
     }
 
@@ -241,6 +258,8 @@
     {
         int countFirst = 0;
         int countSecond = 0;
+        string resultFirstInput = "";
+        string resultSecondInput = "";
         CountDecimalsFirstAndSecondInpuntNumber(out countFirst, out countSecond);
 
         int totalDigitPlaceholderFirst = displayFirstInputNumbers.Count + countFirst;
@@ -256,7 +275,7 @@
             concatFirstInputNumber = $"{decimalsFirstInput}";
 
             // update placeholder of first input number
-            PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+            PlaceholderNumber(concatFirstInputNumber, out concatFirstInputNumber, concatSecondInputNumber, out concatSecondInputNumber);
 
             // updating display number
             displayNumber = concatFirstInputNumber;
@@ -270,7 +289,7 @@
             decimalsSecondInput += secondInputWithComma + fillDigitInString;
             concatSecondInputNumber = $"{decimalsSecondInput}";
 
-            PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+            PlaceholderNumber(concatFirstInputNumber, out concatFirstInputNumber, concatSecondInputNumber, out concatSecondInputNumber);
 
             // concatnate second input number with decimals
             displayNumber = concatSecondInputNumber;
@@ -284,7 +303,8 @@
                 displayFirstInputNumbers.Add(fillDigit); 
 
                 // update first input number
-                PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+                PlaceholderNumber(fillDigitInString, out resultFirstInput, fillDigitInString, out resultSecondInput);
+                concatFirstInputNumber = resultFirstInput;
 
                 displayNumber = concatFirstInputNumber;
             }
@@ -296,7 +316,8 @@
                 displaySecondnputNumbers.Add(fillDigit);  
 
                 // update second input number
-                PlaceholderNumber(out concatFirstInputNumber, out concatSecondInputNumber);
+                PlaceholderNumber(fillDigitInString, out resultFirstInput, fillDigitInString, out resultSecondInput);
+                concatSecondInputNumber = resultSecondInput;
 
                 displayNumber = concatSecondInputNumber;
             } 
@@ -321,9 +342,10 @@
             isPlusMinusOnFirst = !isPlusMinusOnFirst;
             plusMinusFirstInput = isPlusMinusOnFirst ? plusMinusFirstInput += "-" : plusMinusFirstInput += "";
             // overwrite display value
-            displayNumber = isPlusMinusOnFirst ? displayNumber = $"{plusMinusFirstInput}{concatFirstInputNumber}" : displayNumber = $"{concatFirstInputNumber}";
+            concatFirstInputNumber = isPlusMinusOnFirst ? concatFirstInputNumber = $"{plusMinusFirstInput}{concatFirstInputNumber}" : concatFirstInputNumber = $"{concatFirstInputNumber}";
 
-            firstInput = displayNumber;
+            firstInput = concatFirstInputNumber;
+            displayNumber = concatFirstInputNumber;
         }
         else
         {
@@ -331,9 +353,10 @@
             isPlusMinusOnSecond = !isPlusMinusOnSecond;
             plusMinusSecondInput = isPlusMinusOnSecond ? plusMinusSecondInput += "-" : plusMinusSecondInput += "";
             // overwrite display value
-            displayNumber = isPlusMinusOnSecond ? displayNumber = $"{plusMinusSecondInput}{concatSecondInputNumber}" : displayNumber = $"{concatSecondInputNumber}";
+            concatSecondInputNumber = isPlusMinusOnSecond ? concatSecondInputNumber = $"{plusMinusSecondInput}{concatSecondInputNumber}" : concatSecondInputNumber = $"{concatSecondInputNumber}";
 
-            secondInput = displayNumber;
+            secondInput = concatSecondInputNumber;
+            displayNumber = concatSecondInputNumber;
         }
 
         SetInputNumber(firstInput, secondInput); 
@@ -345,24 +368,32 @@
         decimal parseFirstInputNumber = 0;
         decimal parseSecondInputNumber = 0;
 
+        string resultFirstNumber = "";
+        string resultSecondNumber = "";
+
         decimal.TryParse(concatFirstInputNumber, out parseFirstInputNumber);
         decimal.TryParse(concatSecondInputNumber, out parseSecondInputNumber);
-
-        decimal firstNumberInPercentage = parseFirstInputNumber / 100;
-        decimal secondNumberInPercentage = parseSecondInputNumber / 100;
 
         //Forcing to use comma with decimal
         CultureInfo culture = new CultureInfo("nl-NL");
 
-        string resultFirstNumber = firstNumberInPercentage.ToString(culture);
-        string resultSecondNumber = secondNumberInPercentage.ToString(culture);
-
-        // overwrite concatenate first and second input values
-        concatFirstInputNumber = resultFirstNumber;
-        concatSecondInputNumber = resultSecondNumber;
+        if (!isCalculationOn)
+        {
+            decimal firstNumberInPercentage = parseFirstInputNumber / 100;
+            resultFirstNumber = firstNumberInPercentage.ToString(culture);
+            // overwrite concatenate first and second input values
+            concatFirstInputNumber = resultFirstNumber;
+        }
+        else
+        {
+            decimal secondNumberInPercentage = parseSecondInputNumber / 100;
+            resultSecondNumber = secondNumberInPercentage.ToString(culture);
+            // overwrite concatenate first and second input values
+            concatSecondInputNumber = resultSecondNumber;
+        } 
 
         //update the digits of the placeholder
-        PlaceholderNumber(out resultFirstNumber, out resultSecondNumber);
+        PlaceholderNumber(concatFirstInputNumber, out resultFirstNumber, concatSecondInputNumber, out resultSecondNumber);
 
         displayNumber = !isCalculationOn ? concatFirstInputNumber : concatSecondInputNumber;
 
