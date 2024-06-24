@@ -17,4 +17,4 @@ obj/
 *.log
 *.lock.json
 .DS_Store
-Properties/PublishProfiles/Calculator-Assessment - Zip Deploy.pubxml.user
+Calculator-Assessment.PublishSettings
