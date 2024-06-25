@@ -102,9 +102,6 @@
     // the calculator with the operation to calculate first and second
     private Model.Calculator calculator = new Model.Calculator();
 
-    private string plusMinusFirstInput = "";
-    private string plusMinusSecondInput = "";
-
     private OperationState currentOperationState = OperationState.None;
     // html active flag to indicate wich button of the operation is clicked
     private OperationState setActiveForOperationButton = OperationState.None;
@@ -127,8 +124,6 @@
         first = new Model.NumpadConfiguration { InputNumber = 0 };
         second = new Model.NumpadConfiguration { InputNumber = 0 };
 
-        plusMinusFirstInput = "";
-        plusMinusSecondInput = "";
         isCommaOn = false;
         isCalculationOn = false;
         isPlusMinusOnFirst = false;
@@ -147,18 +142,15 @@
     /* Update the display number with or without the plus- & minus-sign */
     private void NumpadPlusMinus()
     {
-        plusMinusFirstInput = "";
-        plusMinusSecondInput = "";
-
         if (!isCalculationOn)
         {
             isPlusMinusOnFirst = !isPlusMinusOnFirst;
-            displayNumber = first.TogglePlusAndMinus(isPlusMinusOnFirst, plusMinusFirstInput);
+            displayNumber = first.TogglePlusAndMinus(isPlusMinusOnFirst);
         }
         else
         {
             isPlusMinusOnSecond = !isPlusMinusOnSecond;
-            displayNumber = second.TogglePlusAndMinus(isPlusMinusOnSecond, plusMinusSecondInput);
+            displayNumber = second.TogglePlusAndMinus(isPlusMinusOnSecond);
         }
     }
 

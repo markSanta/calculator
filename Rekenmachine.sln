@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rekenmachine", "Rekenmachine\Rekenmachine.csproj", "{519A366C-8625-47FB-8127-356F7BB1B101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorTests", "CalculatorTests\CalculatorTests.csproj", "{480828B0-C5AB-40DF-B268-FE8135DF1716}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorTests", "CalculatorTests\CalculatorTests.csproj", "{480828B0-C5AB-40DF-B268-FE8135DF1716}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumpadConfigurationTests", "NumpadConfigurationTests\NumpadConfigurationTests.csproj", "{52AFD5A1-EF9D-4EC5-998D-201D12E41592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{480828B0-C5AB-40DF-B268-FE8135DF1716}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{480828B0-C5AB-40DF-B268-FE8135DF1716}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{480828B0-C5AB-40DF-B268-FE8135DF1716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52AFD5A1-EF9D-4EC5-998D-201D12E41592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52AFD5A1-EF9D-4EC5-998D-201D12E41592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52AFD5A1-EF9D-4EC5-998D-201D12E41592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52AFD5A1-EF9D-4EC5-998D-201D12E41592}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

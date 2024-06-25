@@ -58,13 +58,29 @@ namespace Rekenmachine.Components.Model
         }
 
         /* The plus- & minus-sign will be toggled on and off */
-        public string TogglePlusAndMinus(bool isPlusMinusOn, string plusMinusInput)
-        {  
-            plusMinusInput = isPlusMinusOn ? plusMinusInput += "-" : plusMinusInput += "";
+        public string TogglePlusAndMinus(bool isPlusMinusOn)
+        {
+            // toggle plus- & minus-sign
+            plusMinus = isPlusMinusOn ? plusMinus += "-" : plusMinus += "";
 
-            // update the collection of numbers
-            this.collectInputNumber = isPlusMinusOn ? $"{plusMinusInput}{this.DisplayNumber}" : $"{this.DisplayNumber}";
-             
+            if (this.DisplayNumber.Contains('-'))
+            {
+                // get the index of plus- and minus-sign
+                int indexPlusMinus = this.DisplayNumber.IndexOf('-');
+                // remove it from display number
+                this.DisplayNumber = this.DisplayNumber.Remove(indexPlusMinus, 1);
+
+                // update the collection of numbers
+                this.collectInputNumber = this.DisplayNumber;
+            }
+            else
+            {
+                // update the collection of numbers
+                this.collectInputNumber = $"{plusMinus}{this.DisplayNumber}";
+                // also update display number
+                this.DisplayNumber = this.collectInputNumber;
+            }
+              
             ConvertInputNumberToDecimal(this.collectInputNumber);
 
             return this.collectInputNumber;
@@ -85,7 +101,7 @@ namespace Rekenmachine.Components.Model
             // comma is first pressed 
             if (DisplayInputNumbers.Count == 0)
             {
-                displayResult = $"{plusMinus}{inputNumber}";
+                displayResult = $"0{plusMinus}{inputNumber}";
             }
             else // numpad is first pressed 
             {
