@@ -192,17 +192,20 @@
         }
     }
 
-    /* Change the state of operation */
-    private void ToggleCalculationActiveState(OperationState changeState)
+    /* Change the current state of operation */
+    private void ToggleOperationActiveState(OperationState changeState)
     {
+        // current state of operation is changed
         currentOperationState = changeState;
 
         if (setActiveForOperationButton != OperationState.None)
         {
+            // set operation state off because an other operation button has been clicked  
             setActiveForOperationButton = OperationState.None;
         }
         else
         {
+            // set operation state is current because this operation button has been clicked 
             setActiveForOperationButton = currentOperationState;
         }
     }
@@ -212,7 +215,7 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(OperationState.Divide);
+        ToggleOperationActiveState(OperationState.Divide);
     }
 
     /* Changes the flags of calculation and comma, and seting operation state for multiplication  */
@@ -220,7 +223,7 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(OperationState.Multiply);
+        ToggleOperationActiveState(OperationState.Multiply);
     }
 
     /* Changes the flags of calculation and comma, and seting operation state for subraction */
@@ -228,7 +231,7 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(OperationState.Minus);
+        ToggleOperationActiveState(OperationState.Minus);
     }
 
     /* Changes the flags of calculation and comma, and seting operation state for addition */
@@ -236,7 +239,7 @@
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(OperationState.Plus);
+        ToggleOperationActiveState(OperationState.Plus);
     }
 
     /* Point to the right operation state for calculation and display the result */
@@ -261,7 +264,7 @@
 
         }
         displayNumber = resultCalculation.ToString();
-        ToggleCalculationActiveState(OperationState.Som);
+        ToggleOperationActiveState(OperationState.Som);
         isCalculationOn = false;
     }
 
