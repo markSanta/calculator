@@ -26,7 +26,7 @@
                     <button class="btn btn-outline-primary" @onclick="NumpadPercentage">%</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Divide ? "active" : "")" @onclick=" NumPadDivide">/</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == OperationState.Divide ? "active" : "")" @onclick=" NumPadDivison">/</button>
                 </td>
             </tr>
             <tr>
@@ -40,7 +40,7 @@
                     <button class="btn btn-outline-secondary" @onclick="NumPadNine">9</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Multiply ? "active" : "")" @onclick="NumPadMultiply">x</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == OperationState.Multiply ? "active" : "")" @onclick="NumPadMultiplication">x</button>
                 </td>
             </tr>
             <tr>
@@ -54,7 +54,7 @@
                     <button class="btn btn-outline-secondary" @onclick="NumPadSix">6</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Minus ? "active" : "")" @onclick="NumpadSubtraction">-</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == OperationState.Minus ? "active" : "")" @onclick="NumpadSubtraction">-</button>
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@
                     <button class="btn btn-outline-secondary" @onclick="NumPadTree">3</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Plus ? "active" : "")" @onclick="NumpadAddition">+</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == OperationState.Plus ? "active" : "")" @onclick="NumpadAddition">+</button>
                 </td>
             </tr>
             <tr>
@@ -79,7 +79,7 @@
                     <button class="btn btn-outline-secondary" @onclick="NumpadComma">,</button>
                 </td>
                 <td>
-                    <button class="btn btn-outline-warning @(stateActiveButton == Operation.Som ? "active" : "")" @onclick="NumpadSom">=</button>
+                    <button class="btn btn-outline-warning @(stateActiveButton == OperationState.Som ? "active" : "")" @onclick="NumpadSom">=</button>
                 </td>
             </tr>
         </tbody>
@@ -94,17 +94,20 @@
     private string displayNumber = "0";
     private string tempInputNmber = string.Empty;
 
+    // number configuration before the operation
     private Model.NumpadConfiguration first = new Model.NumpadConfiguration { InputNumber = 0 };
+    // number configuration after the operation
     private Model.NumpadConfiguration second = new Model.NumpadConfiguration { InputNumber = 0 };
+    // the calculator with the operation to calculate first and second
     private Model.Calculator calculator = new Model.Calculator();
 
     private string plusMinusFirstInput = "";
     private string plusMinusSecondInput = "";
 
-    private Operation stateCalculation = Operation.None;
-    private Operation stateActiveButton = Operation.None;
+    private OperationState stateCalculation = OperationState.None;
+    private OperationState stateActiveButton = OperationState.None;
 
-    private enum Operation
+    private enum OperationState
     {
         Divide,
         Multiply,
@@ -129,8 +132,8 @@
         isPlusMinusOnFirst = false;
         isPlusMinusOnSecond = false;
 
-        stateCalculation = Operation.None;
-        stateActiveButton = Operation.None;
+        stateCalculation = OperationState.None;
+        stateActiveButton = OperationState.None;
     }
 
     /* Flag for comma when it's pressed */
@@ -188,12 +191,12 @@
     }
 
     /* Toggle the calculation buttons of multiply, divide, minus and plus. */
-    private void ToggleCalculationActiveState(Operation changeState)
+    private void ToggleCalculationActiveState(OperationState changeState)
     {
         stateCalculation = changeState;
-        if (stateActiveButton != Operation.None)
+        if (stateActiveButton != OperationState.None)
         {
-            stateActiveButton = Operation.None;
+            stateActiveButton = OperationState.None;
         }
         else
         {
@@ -201,62 +204,61 @@
         }
     }
 
-    /* This will hold isCalculation is true when divide is clicked. Reset the state isCommaOn to false. */
-    private void NumPadDivide()
+    /* Changes the flags of calculation and comma, and seting operation state for division */
+    private void NumPadDivison()
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Operation.Divide);
+        ToggleCalculationActiveState(OperationState.Divide);
     }
 
-    /* This will hold isCalculation is true when multiply is clicked. Reset the state isCommaOn to false. */
-    private void NumPadMultiply()
+    /* Changes the flags of calculation and comma, and seting operation state for multiplication  */
+    private void NumPadMultiplication()
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Operation.Multiply);
+        ToggleCalculationActiveState(OperationState.Multiply);
     }
 
-    /* This will hold isCalculation is true when minus is clicked. Reset the state isCommaOn to false. */
+    /* Changes the flags of calculation and comma, and seting operation state for subraction */
     private void NumpadSubtraction()
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Operation.Minus);
+        ToggleCalculationActiveState(OperationState.Minus);
     }
 
-    /* This will hold isCalculation is true when plus is clicked. Reset the state isCommaOn to false. */
+    /* Changes the flags of calculation and comma, and seting operation state for addition */
     private void NumpadAddition()
     {
         isCalculationOn = true;
         isCommaOn = false;
-        ToggleCalculationActiveState(Operation.Plus);
+        ToggleCalculationActiveState(OperationState.Plus);
     }
 
-    /* Input data is in string and need to convert to decimal for calculation.
-    * The calculation are Divide, Multiply, Minus and Plus */
+    /* Point to the right operation state for calculation and display the result */
     private void NumpadSom()
     {
         decimal resultCalculation = 0;
 
         switch (stateCalculation)
         {
-            case Operation.Divide:
+            case OperationState.Divide:
                 resultCalculation = calculator.CalculateDivision(first.InputNumber, second.InputNumber);
                 break;
-            case Operation.Multiply:
+            case OperationState.Multiply:
                 resultCalculation = calculator.CalculateMultiplication(first.InputNumber, second.InputNumber);
                 break;
-            case Operation.Minus:
+            case OperationState.Minus:
                 resultCalculation = calculator.CalculateSubtraction(first.InputNumber, second.InputNumber);
                 break;
-            case Operation.Plus:
+            case OperationState.Plus:
                 resultCalculation = calculator.CalculateAddition(first.InputNumber, second.InputNumber);
                 break;
 
         }
         displayNumber = resultCalculation.ToString();
-        ToggleCalculationActiveState(Operation.Som);
+        ToggleCalculationActiveState(OperationState.Som);
         isCalculationOn = false;
     }
 
