@@ -7,10 +7,10 @@
                 
         }
 
-        /* Calculate the percentage of the number. */
-        public decimal Percentage(decimal inputNumber)
+        /* Calculate the percentage of the number */
+        public decimal Percentage(decimal a)
         {
-            return inputNumber / 100;
+            return a / 100;
         }
 
         public decimal CalculateDivision(decimal a, decimal b)

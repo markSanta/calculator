@@ -11,7 +11,7 @@ namespace Rekenmachine.Components.Model
  
         private string plusMinus { get; set; }
 
-        private string concatInputNumber { get; set; }
+        private string collectInputNumber { get; set; }
 
         public NumpadConfiguration()
         {
@@ -20,107 +20,107 @@ namespace Rekenmachine.Components.Model
             this.DisplayNumber = string.Empty;
             this.DisplayInputNumbers = new List<int>();
             this.plusMinus = string.Empty; 
-            this.concatInputNumber = string.Empty;  
+            this.collectInputNumber = string.Empty;  
         }
 
-        /* Will combine the first and second input numbers into string */
-        public void ConcatenateNumbers(int fillDigit, string fillDigitInString, bool isCommaOn)
+        /* Collect the numbers and store it in a string and then convert that string to decimal */
+        public void CollectNumber(int fillDigit, string fillDigitInString, bool isCommaOn)
         {     
-            int totalDigitPlaceholderFirst = DisplayInputNumbers.Count; 
+            int totalDigitPlaceholder = DisplayInputNumbers.Count; 
 
-            if (isCommaOn && totalDigitPlaceholderFirst < 9)
+            // collecting part for decimal
+            if (isCommaOn && totalDigitPlaceholder < 9)
             {
-                // set comma when comma is clicked multiple times
-                string firstInputWithComma = this.concatInputNumber.Contains(',') ? "" : ",";
+                // set 1 comma when comma is clicked multiple times
+                string inputWithComma = this.collectInputNumber.Contains(',') ? "" : ",";
 
-                // concatenate first input number with decimals
-                this.InputDecimal += firstInputWithComma + fillDigitInString;
-                this.concatInputNumber = $"{this.InputDecimal}";
+                // concatenate input number with decimal
+                this.InputDecimal += inputWithComma + fillDigitInString;
+                this.collectInputNumber = $"{this.InputDecimal}";
 
-                // update placeholder of first input number
-                this.DisplayNumber = PlaceholderNumber(this.concatInputNumber);
-            } 
-            else
-            {
-                // check for first input number if the digits has enough space to store in placeholder
-                if (totalDigitPlaceholderFirst < 9 && DisplayInputNumbers.Count < 9)
+                // update placeholder of input number
+                this.DisplayNumber = PlaceholderNumber(this.collectInputNumber);
+            }
+            else // collecting part for integers
+            { 
+                if (totalDigitPlaceholder < 9)
                 {
-                    // place the digit of fist input numbers to the placeholder
+                    // storing the integer
                     DisplayInputNumbers.Add(fillDigit);
                      
-                    // update first input number
+                    // update display number
                     this.DisplayNumber = PlaceholderNumber(fillDigitInString); 
                 } 
             }
 
+            // colleting the numbers complete and stored in a string and convert it to decimal
             ConvertInputNumberToDecimal(this.DisplayNumber);
         }
 
-        /* The minus sign will be toggled on and off based on for first input number and second input number */
-        public string TogglePlusAndMinus(bool isPlusMinusOn, string plusMinusFirstInput)
+        /* The plus- & minus-sign will be toggled on and off */
+        public string TogglePlusAndMinus(bool isPlusMinusOn, string plusMinusInput)
         {  
-            plusMinusFirstInput = isPlusMinusOn ? plusMinusFirstInput += "-" : plusMinusFirstInput += "";
+            plusMinusInput = isPlusMinusOn ? plusMinusInput += "-" : plusMinusInput += "";
 
-            // overwrite display value
-            this.concatInputNumber = isPlusMinusOn ? $"{plusMinusFirstInput}{this.DisplayNumber}" : $"{this.DisplayNumber}";
+            // update the collection of numbers
+            this.collectInputNumber = isPlusMinusOn ? $"{plusMinusInput}{this.DisplayNumber}" : $"{this.DisplayNumber}";
              
-            ConvertInputNumberToDecimal(this.concatInputNumber);
+            ConvertInputNumberToDecimal(this.collectInputNumber);
 
-            return this.concatInputNumber;
+            return this.collectInputNumber;
         }
 
-        private void ConvertInputNumberToDecimal(string firstNumber)
+        /* Convert string to decimal */
+        private void ConvertInputNumberToDecimal(string inputNumber)
         {
-            if (!string.IsNullOrEmpty(firstNumber))
-                InputNumber = decimal.Parse(firstNumber);
+            if (!string.IsNullOrEmpty(inputNumber))
+                InputNumber = decimal.Parse(inputNumber);
         }
          
-        /* Placeholders of numbers with plus and minus 9 digits and decimals */
-        private string PlaceholderNumber(string firstInput)
+        /* To organize plus- & minus-sign, 9 digits and decimal and to display it */
+        private string PlaceholderNumber(string inputNumber)
         {
-            string resultFirstInput;
+            string displayResult;
 
-            // Comma is first pressed after the operation (division, multiply, minus and adding)
+            // comma is first pressed 
             if (DisplayInputNumbers.Count == 0)
             {
-                resultFirstInput = $"{plusMinus}{firstInput}";
+                displayResult = $"{plusMinus}{inputNumber}";
             }
-            else // Numpad is first pressed before the operation (division, multiply, minus and adding)
+            else // numpad is first pressed 
             {
                 switch (DisplayInputNumbers.Count - 1)
                 {
                     case 0:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}{InputDecimal}";
                         break;
                     case 1:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{InputDecimal}";
                         break;
                     case 2:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}{InputDecimal}";
                         break;
                     case 3:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}.{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}.{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}{InputDecimal}";
                         break;
                     case 4:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}.{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}.{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}{InputDecimal}";
                         break;
                     case 5:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}.{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}{DisplayInputNumbers[5]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}.{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}{DisplayInputNumbers[5]}{InputDecimal}";
                         break;
                     case 6:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}.{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}.{DisplayInputNumbers[4]}{DisplayInputNumbers[5]}{DisplayInputNumbers[6]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}.{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}.{DisplayInputNumbers[4]}{DisplayInputNumbers[5]}{DisplayInputNumbers[6]}{InputDecimal}";
                         break;
                     case 7:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}.{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}.{DisplayInputNumbers[5]}{DisplayInputNumbers[6]}{DisplayInputNumbers[7]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}.{DisplayInputNumbers[2]}{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}.{DisplayInputNumbers[5]}{DisplayInputNumbers[6]}{DisplayInputNumbers[7]}{InputDecimal}";
                         break;
                     default:
-                        resultFirstInput = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}.{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}{DisplayInputNumbers[5]}.{DisplayInputNumbers[6]}{DisplayInputNumbers[7]}{DisplayInputNumbers[8]}{InputDecimal}";
+                        displayResult = $"{plusMinus}{DisplayInputNumbers[0]}{DisplayInputNumbers[1]}{DisplayInputNumbers[2]}.{DisplayInputNumbers[3]}{DisplayInputNumbers[4]}{DisplayInputNumbers[5]}.{DisplayInputNumbers[6]}{DisplayInputNumbers[7]}{DisplayInputNumbers[8]}{InputDecimal}";
                         break;
                 }
             } 
-            return resultFirstInput; 
-        }
-
-
+            return displayResult; 
+        } 
     }
 }

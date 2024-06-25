@@ -124,7 +124,7 @@
 
         plusMinusFirstInput = "";
         plusMinusSecondInput = "";
-        isCommaOn = false; 
+        isCommaOn = false;
         isCalculationOn = false;
         isPlusMinusOnFirst = false;
         isPlusMinusOnSecond = false;
@@ -141,7 +141,7 @@
 
     /* The minus sign will be toggled on and off based on for first input number and second input number */
     private void NumpadPlusMinus()
-    { 
+    {
         plusMinusFirstInput = "";
         plusMinusSecondInput = "";
 
@@ -151,15 +151,15 @@
             displayNumber = first.TogglePlusAndMinus(isPlusMinusOnFirst, plusMinusFirstInput);
         }
         else
-        { 
+        {
             isPlusMinusOnSecond = !isPlusMinusOnSecond;
             displayNumber = second.TogglePlusAndMinus(isPlusMinusOnSecond, plusMinusSecondInput);
-        } 
-    } 
+        }
+    }
 
     /* Calculate the percentage of the number. */
     private void NumpadPercentage()
-    {   
+    {
         //Forcing to use comma with decimal
         CultureInfo culture = new CultureInfo("nl-NL");
 
@@ -172,7 +172,7 @@
             first.DisplayNumber = firstNumberInPercentage.ToString(culture);
 
             // update display number
-            displayNumber = firstNumberInPercentage.ToString(culture);  
+            displayNumber = firstNumberInPercentage.ToString(culture);
         }
         else
         {
@@ -184,7 +184,7 @@
 
             // update display number
             displayNumber = secondNumberInPercentage.ToString(culture);
-        } 
+        }
     }
 
     /* Toggle the calculation buttons of multiply, divide, minus and plus. */
@@ -236,28 +236,28 @@
     /* Input data is in string and need to convert to decimal for calculation.
     * The calculation are Divide, Multiply, Minus and Plus */
     private void NumpadSom()
-    {    
-        decimal resultCalculation = 0; 
+    {
+        decimal resultCalculation = 0;
 
         switch (stateCalculation)
         {
-            case Operation.Divide: 
+            case Operation.Divide:
                 resultCalculation = calculator.CalculateDivision(first.InputNumber, second.InputNumber);
                 break;
-            case Operation.Multiply: 
+            case Operation.Multiply:
                 resultCalculation = calculator.CalculateMultiplication(first.InputNumber, second.InputNumber);
                 break;
-            case Operation.Minus: 
+            case Operation.Minus:
                 resultCalculation = calculator.CalculateSubtraction(first.InputNumber, second.InputNumber);
                 break;
-            case Operation.Plus: 
+            case Operation.Plus:
                 resultCalculation = calculator.CalculateAddition(first.InputNumber, second.InputNumber);
                 break;
 
         }
-        displayNumber = resultCalculation.ToString();  
-        ToggleCalculationActiveState(Operation.Som); 
-        isCalculationOn = false;  
+        displayNumber = resultCalculation.ToString();
+        ToggleCalculationActiveState(Operation.Som);
+        isCalculationOn = false;
     }
 
     private void NumPadZero()
@@ -266,50 +266,50 @@
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(0, "0", isCommaOn);
+            first.CollectNumber(0, "0", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(0, "0", isCommaOn);
+            second.CollectNumber(0, "0", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
- 
+
         // update display number
         displayNumber = tempInputNmber;
     }
 
     private void NumPadOne()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(1, "1", isCommaOn);
+            first.CollectNumber(1, "1", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(1, "1", isCommaOn);
+            second.CollectNumber(1, "1", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
-        
+
         // update display number
         displayNumber = tempInputNmber;
     }
 
     private void NumPadTwo()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(2, "2", isCommaOn);
+            first.CollectNumber(2, "2", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(2, "2", isCommaOn);
+            second.CollectNumber(2, "2", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
@@ -318,17 +318,17 @@
     }
 
     private void NumPadTree()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(3, "3", isCommaOn);
+            first.CollectNumber(3, "3", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(3, "3", isCommaOn);
+            second.CollectNumber(3, "3", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
@@ -337,17 +337,17 @@
     }
 
     private void NumPadFour()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(4, "4", isCommaOn);
+            first.CollectNumber(4, "4", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(4, "4", isCommaOn);
+            second.CollectNumber(4, "4", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
@@ -356,17 +356,17 @@
     }
 
     private void NumPadFive()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(5, "5", isCommaOn);
+            first.CollectNumber(5, "5", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(5, "5", isCommaOn);
+            second.CollectNumber(5, "5", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
@@ -375,17 +375,17 @@
     }
 
     private void NumPadSix()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(6, "6", isCommaOn);
+            first.CollectNumber(6, "6", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(6, "6", isCommaOn);
+            second.CollectNumber(6, "6", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
@@ -394,17 +394,17 @@
     }
 
     private void NumPadSeven()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(7, "7", isCommaOn);
+            first.CollectNumber(7, "7", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(7, "7", isCommaOn);
+            second.CollectNumber(7, "7", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
@@ -413,17 +413,17 @@
     }
 
     private void NumPadEight()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(8, "8", isCommaOn);
+            first.CollectNumber(8, "8", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(8, "8", isCommaOn);
+            second.CollectNumber(8, "8", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
@@ -432,22 +432,22 @@
     }
 
     private void NumPadNine()
-    { 
+    {
         tempInputNmber = string.Empty;
 
         if (!isCalculationOn)
         {
-            first.ConcatenateNumbers(9, "9", isCommaOn);
+            first.CollectNumber(9, "9", isCommaOn);
             tempInputNmber = first.DisplayNumber;
         }
         else
         {
-            second.ConcatenateNumbers(9, "9", isCommaOn);
+            second.CollectNumber(9, "9", isCommaOn);
             tempInputNmber = second.DisplayNumber;
         }
 
         // update display number
         displayNumber = tempInputNmber;
     }
- 
+
 }
