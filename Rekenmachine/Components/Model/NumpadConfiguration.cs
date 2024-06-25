@@ -25,10 +25,8 @@ namespace Rekenmachine.Components.Model
 
         /* Will combine the first and second input numbers into string */
         public void ConcatenateNumbers(int fillDigit, string fillDigitInString, bool isCommaOn)
-        {    
-            CountDecimalsInputNumber(out int countFirst);
-
-            int totalDigitPlaceholderFirst = DisplayInputNumbers.Count + countFirst; 
+        {     
+            int totalDigitPlaceholderFirst = DisplayInputNumbers.Count; 
 
             if (isCommaOn && totalDigitPlaceholderFirst < 9)
             {
@@ -76,19 +74,7 @@ namespace Rekenmachine.Components.Model
             if (!string.IsNullOrEmpty(firstNumber))
                 InputNumber = decimal.Parse(firstNumber);
         }
-
-        /* Count the decimals in the input number */
-        private void CountDecimalsInputNumber(out int count)
-        {
-            count = 0; 
-
-            foreach (char item in InputDecimal.ToCharArray())
-            {
-                if (char.IsDigit(item))
-                    count++;
-            }  
-        }
-
+         
         /* Placeholders of numbers with plus and minus 9 digits and decimals */
         private string PlaceholderNumber(string firstInput)
         {
